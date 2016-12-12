@@ -59,8 +59,8 @@
 
 			setupLabel(tagName);
 			
-			defaultColor.color = 0xFF0000;
-			hoverColor.color = 0x0000FF;
+			defaultColor.color = 0xebb83e;
+			hoverColor.color = 0xeb3e3e;
 
 			//loadImage(data.imgURL);
 

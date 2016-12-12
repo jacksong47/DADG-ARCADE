@@ -11,7 +11,8 @@
 	import flash.display.Loader;
 	import flash.display.StageScaleMode;
 	import flash.display.StageAlign;
-	import flash.desktop.NativeProcess;
+	import flash.display.*
+		import flash.desktop.NativeProcess;
 	import flash.desktop.NativeProcessStartupInfo;
 	import flash.system.fscommand;
 	import flash.events.MouseEvent;
@@ -24,6 +25,13 @@
 		private static const DATA_PATH: String = "./content/content.xml";
 		//private static const DATA_PATH: String = "./content/projects/project.xml";
 		private static const SCROLL_MULT: int = 10;
+
+		var fillType: String = GradientType.LINEAR;
+		var colors: Array = [0xFF0000, 0x0000FF];
+		var alphas: Array = [1, 1];
+		var ratios: Array = [0x00, 0xFF];
+		var matr: Matrix = new Matrix();
+
 
 		private var data: XML;
 		/**
@@ -51,6 +59,9 @@
 		public function ArcadeOS() {
 			Keyboard.setup(stage);
 
+			
+
+
 			main = this;
 			sideView = new SideView();
 			addChild(sideView);
@@ -63,6 +74,7 @@
 
 			stage.addEventListener(MouseEvent.MOUSE_WHEEL, handleScrollWheel);
 			addEventListener(Event.ENTER_FRAME, handleFrame);
+			createBG();
 		}
 		private function handleFrame(e: Event): void {
 
@@ -99,9 +111,10 @@
 			for (var i: uint = 0; i < files.length; i++) {
 				trace(files[i].nativePath); // gets the path of the files
 				trace(files[i].name); // gets the name
-				var folder:String = files[i].nativePath + "\\project.xml";
+				var folder: String = files[i].nativePath + "\\project.xml";
 				trace(folder);
-				var request: URLRequest = new URLRequest(folder);
+				//var request: URLRequest = new URLRequest(folder);
+				var request: URLRequest = new URLRequest(DATA_PATH);
 				trace(request);
 				var loader: URLLoader = new URLLoader(request);
 				loader.addEventListener(Event.COMPLETE, doneLoadingData);
@@ -109,7 +122,7 @@
 
 
 
-			
+
 		}
 		/**
 		 * doneLoadingData() is used to initate the use of data after
@@ -257,6 +270,37 @@
 			}
 
 			return models;
+		}
+		private function createBG(): void {
+			var gradientScaling: Number = 1; // use this for easy scaling of the gradient
+
+			var gradientMatrixWidth: Number = 50 * gradientScaling;
+			var gradientMatrixHeight: Number = 50 * gradientScaling;
+			var gradientMatrixRotation: Number = 0.63;
+			var gradientTx: Number = 0 * gradientScaling;
+			var gradientTy: Number = 0 * gradientScaling;
+
+			var gradientDrawWidth: Number = 50 * gradientScaling;
+			var gradientDrawHeight: Number = 50 * gradientScaling;
+			var gradientOffsetX: Number = 0; // use this to move the gradient horizontally
+			var gradientOffsetY: Number = 0; // use this to move the gradient vertically
+
+			var gradientMatrix: Matrix = new Matrix();
+			gradientMatrix.createGradientBox(gradientMatrixWidth, gradientMatrixHeight, gradientMatrixRotation, gradientTx + gradientOffsetX, gradientTy + gradientOffsetY);
+
+			var gradientType: String = GradientType.LINEAR;
+			var gradientColors: Array = [0x0, 0xffffff]
+			var gradientAlphas: Array = [1, 1]
+			var gradientRatios: Array = [0, 255]
+			var gradientSpreadMethod: String = SpreadMethod.PAD;
+			var gradientInterpolationMethod: String = InterpolationMethod.RGB;
+			var gradientFocalPoint: Number = 0;
+
+			var gradientGraphics: Graphics = this.graphics; // replace 'this' with the object you want to apply the gradient to
+
+			gradientGraphics.beginGradientFill(gradientType, gradientColors, gradientAlphas, gradientRatios, gradientMatrix, gradientSpreadMethod, gradientInterpolationMethod, gradientFocalPoint);
+			gradientGraphics.drawRect(gradientOffsetX, gradientOffsetY, gradientDrawWidth, gradientDrawHeight);
+			gradientGraphics.endFill();
 		}
 	}
 }

@@ -10,6 +10,7 @@ package org.DAGD.Arcade {
 	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.display.Loader;
+	import flash.events.MouseEvent;
 
 	public class ProjectView extends MainView {
 
@@ -18,6 +19,9 @@ package org.DAGD.Arcade {
 		public static const IMG_CONTAINER_HEIGHT: int = 520;
 		public static const LEFT_MARGIN: int = 60;
 		public static const TOP_MARGIN: int = 232;
+		public static const BWIDTH: int = 30;
+		public static const BHEIGHT: int = 30;
+		private var backButton: Sprite = new Sprite();
 
 		private var imgH: Number = 0;
 		private var imgContainer: Sprite = new Sprite();
@@ -56,6 +60,7 @@ package org.DAGD.Arcade {
 
 			addChildAt(imgContainer, 0);
 			content.addChild(img);
+			createBackButton();
 
 		}
 		private function setupDesc(caption: String): void {
@@ -94,5 +99,16 @@ package org.DAGD.Arcade {
 			addChild(description);
 
 		}
+		private function createBackButton():void{
+			addChildAt(backButton,1);
+			backButton.graphics.beginFill(0xff0000);
+			backButton.graphics.drawRect(0, 0, BWIDTH, BHEIGHT);
+			backButton.addEventListener(MouseEvent.CLICK,goBack);
+		}
+		private function goBack(e:Event):void{
+			trace("clicked");
+			ArcadeOS.goBackToTile();
+		}
+			
 	}
 }

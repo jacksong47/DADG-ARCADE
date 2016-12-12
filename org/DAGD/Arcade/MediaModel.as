@@ -25,10 +25,11 @@
 				tagz.push(xml.tags.tag);
 				//trace(xml.media.tags.tag[i]);
 			}*/
-			tagz.push(xml.tags);
-			trace("these are my tags"+tagz);
-			//trace("boom");
-			//trace(xml.media.tags.tag);
+			
+			for each(var tag:String in xml.tags.tag){
+				tagz.push(tag);
+			}
+			
 			
 			imgURL = File.applicationDirectory.resolvePath(xml.thumb).nativePath;
 		}

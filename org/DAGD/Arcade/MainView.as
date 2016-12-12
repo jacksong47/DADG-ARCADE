@@ -22,14 +22,14 @@
 		public override function update(): void {
 			var heightOfContent: int = this.height;
 			contentH = heightOfContent;
-			
-			if(selectedY>heightOfContent-screenHeight){
+			if(heightOfContent<screenHeight){
+				targetY=0;
+			}
+			else if(selectedY>heightOfContent-screenHeight){
 				targetY=-heightOfContent+screenHeight;
-				//trace("two");
 				}
 			else if(selectedY>screenHeight-thumbHeight){
 				targetY = -selectedY+thumbHeight;
-				//trace("one");
 			}else{
 				targetY=0;
 			}
@@ -40,8 +40,6 @@
 			//trace(targetY);
 			//trace(selectedY);
 			//trace(thumbHeight);
-			
-			
 			
 			y += (targetY - y) * .1;
 			

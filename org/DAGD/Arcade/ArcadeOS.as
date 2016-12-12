@@ -15,21 +15,24 @@
 	import flash.desktop.NativeProcessStartupInfo;
 	import flash.system.fscommand;
 	import flash.events.MouseEvent;
+	import flash.filesystem.File;
+
 
 	public class ArcadeOS extends MovieClip {
 		private static var main: ArcadeOS;
 		private static var selectedView: View;
 		private static const DATA_PATH: String = "./content/content.xml";
+		//private static const DATA_PATH: String = "./content/projects/project.xml";
 		private static const SCROLL_MULT: int = 10;
 
 		private var data: XML;
 		/**
 		 * This collection stores MediaModel objects.
 		 */
-		public static var collection: Array = new Array();
-		public static var tags: Array = new Array();
-
-		public static var clickedTags: Array = new Array();
+		public static var collection: Array = new Array(); //all media files
+		public static var tags: Array = new Array(); // collection of all tags used in projects
+		public static var clickedTags: Array = new Array(); // tags user selected to filter out the collection
+		public static var viewStorage: Array = new Array(); // array of views to be recalled when switching views
 
 		private var sideView: SideView;
 		private var mainView: MainView;
@@ -91,9 +94,22 @@
 		 * it launches an event and runs doneLoadingData()
 		 */
 		private function loadData(): void {
-			var request: URLRequest = new URLRequest(DATA_PATH);
-			var loader: URLLoader = new URLLoader(request);
-			loader.addEventListener(Event.COMPLETE, doneLoadingData);
+			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
+			var files: Array = desktop.getDirectoryListing();
+			for (var i: uint = 0; i < files.length; i++) {
+				trace(files[i].nativePath); // gets the path of the files
+				trace(files[i].name); // gets the name
+				var folder:String = files[i].nativePath + "\\project.xml";
+				trace(folder);
+				var request: URLRequest = new URLRequest(folder);
+				trace(request);
+				var loader: URLLoader = new URLLoader(request);
+				loader.addEventListener(Event.COMPLETE, doneLoadingData);
+			}
+
+
+
+			
 		}
 		/**
 		 * doneLoadingData() is used to initate the use of data after
@@ -178,44 +194,69 @@
 		public static function getSelectedView(): View {
 			return selectedView;
 		}
+		//--------------------------------------------------------------------------Add to Array to be recalled later
+		public static function goBackToTile(): void {
+			if (viewStorage != null) {
+				for each(var oldView: MainView in viewStorage) {
+					changeMainView(oldView);
+					viewStorage.splice(oldView, 1);
+				}
+				viewStorage = new Array;
+
+			}
+		}
 		public static function changeMainView(newMainView: MainView): void {
 			if (main.mainView != null) {
-				main.mainView.dispose();
+				viewStorage.push(main.mainView);
+				//main.mainView.dispose();
 				main.removeChild(main.mainView);
 			}
+			//main.mainView.selectedY=0;
 			main.mainView = newMainView;
 			main.addChild(newMainView);
 			main.layout(false);
 		}
-		public static function toggleTags(): void {
-			var thumbView: ThumbView = new ThumbView();
-			thumbView.dataUpdated();
 
+		public static function toggleTag(tag: String): Boolean {
 
+			var removedTag: Boolean = false;
 
-			//for each(var t:int = 0; t<xml.media.tags.tag.length(); t++){
-			//var tag = xml.media.tags.tag[t];
-			//var alreadyExists = false;
-
-			trace("clickedTagsArray  "+clickedTags);
-			for each(var tag1: String in clickedTags) {
-				trace("clickedTag  "+tag1);
-				for each(var tagged1: MediaModel in collection) {
-					for each(var tagged2: String in tagged1.tagz) {
-						if (tag1 == ("<tag>"+tagged2+"<tag>")) {
-							trace("Tag Match!");
-						}else{
-							trace("No tag matches");
-						}
-					}
+			for (var i: int = clickedTags.length - 1; i >= 0; i--) {
+				if (clickedTags[i] == tag) {
+					clickedTags.splice(i, 1);
+					removedTag = true;
 				}
 			}
-			//if(alreadyExists == false)tags.push(tag);
-			//}			
 
-			//activated = !activated;
-			//if (activated)ArcadeOS.clickedTags.push(sayMyName);
-			//if(!activated)ArcadeOS.clickedTags.splice(sayMyName);*/
+			if (removedTag == false) {
+				clickedTags.push(tag);
+				main.layout(true);
+				return true;
+			}
+			main.layout(true);
+			return false;
+		}
+		public static function getMediaByTags(): Array {
+
+			if (clickedTags.length == 0) return collection;
+
+			var models: Array = new Array();
+
+			for each(var model: MediaModel in collection) {
+				for each(var tag: String in model.tagz) {
+					var modelAdded: Boolean = false;
+					for each(var ctag: String in clickedTags) {
+						if (ctag == tag) {
+							models.push(model);
+							modelAdded = true;
+							break;
+						}
+					}
+					if (modelAdded) break;
+				}
+			}
+
+			return models;
 		}
 	}
 }

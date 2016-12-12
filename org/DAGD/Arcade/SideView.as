@@ -9,7 +9,6 @@
 	public class SideView extends View {
 		private var tags: Array = new Array(); // holds MediaButton objects
 		//private var tagContainer: Sprite = new Sprite();
-		public var clickedTags: Array = new Array();
 		public var tagTriggered:Boolean=false;
 		public var triggeredTags:Array = new Array();
 		
@@ -25,7 +24,14 @@
 		 *
 		 */
 		public override function dataUpdated(): void {
+			removeButtons();
 			makeButtons();
+		}
+		public override function update(): void {
+			super.update();
+			for each(var tag: TagButton in tags) {
+				tag.update();
+			}
 		}
 
 		/**
@@ -57,11 +63,10 @@
 		 *
 		 * Finally instantiating a new buttons array to replace the old one
 		 */
-		private function removeButtons(e: MouseEvent): void {
+		private function removeButtons(): void {
 			// REMOVE ALL OLD BUTTONS:
-			for each(var tag: TextField in tags) {
+			for each(var tag: TagButton in tags) {
 				//tag.dispose();
-				removeEventListener(MouseEvent.CLICK,removeButtons);
 				removeChild(tag);
 			}
 			tags = new Array();

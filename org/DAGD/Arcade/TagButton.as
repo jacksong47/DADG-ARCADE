@@ -21,12 +21,13 @@
 
 		private static const TXT_BOX_HEIGHT: int = 30;
 
-		private var imgMask: Sprite = new Sprite();
 		private var txtBox: Sprite = new Sprite();
 		private var content: Sprite = new Sprite();
 		private var label: TextField;
 		private var sayMyName: String;
 		public var activated: Boolean = false;
+		
+		public static var colorOn: Boolean = false;
 		private var defaultColor = new ColorTransform();
 		private var hoverColor = new ColorTransform();
 		
@@ -52,11 +53,9 @@
 			sayMyName = data;
 
 			addChild(content);
-			addChild(imgMask);
-			imgMask.graphics.beginFill(0x0);
-			imgMask.graphics.drawRect(0, 0, WIDTH, HEIGHT);
-
-			content.mask = imgMask;
+			
+			graphics.beginFill(0x0);
+			graphics.drawRect(0, 0, WIDTH, HEIGHT);
 
 			setupLabel(tagName);
 			
@@ -71,7 +70,8 @@
 
 		private function setupLabel(caption: String): void {
 
-			content.addChild(txtBox);
+			txtBox.graphics.beginFill(0xFFFFFF, .9);
+			txtBox.graphics.drawRect(0, 0, WIDTH, TXT_BOX_HEIGHT);
 
 			label = new TextField();
 			label.multiline = false;
@@ -82,8 +82,9 @@
 			label.antiAliasType = AntiAliasType.NORMAL;
 			label.x = 5;
 			txtBox.addChild(label);
-			txtBox.graphics.beginFill(0xff0000, .8);
-			txtBox.graphics.drawRect(0, 0, WIDTH, TXT_BOX_HEIGHT);
+			content.addChild(txtBox);
+			
+			
 
 		}
 		/**
@@ -105,13 +106,11 @@
 			//content.addChildAt(img, 0);
 		}
 		public override function update(): void {
-			if (selected) {
-				txtBox.y += ((HEIGHT - TXT_BOX_HEIGHT) - txtBox.y) * .5;
-			} else {
-				txtBox.y += (HEIGHT - txtBox.y) * .5;
+			if(colorOn){
+				txtBox.transform.colorTransform = hoverColor;
+			}else{
+				txtBox.transform.colorTransform = defaultColor;
 			}
-			
-			txtBox.transform.colorTransform = defaultColor;
 		}
 		/**
 		 * This function disposes of all MediaButton information
@@ -130,18 +129,12 @@
 		}
 		private function handleClick(e: MouseEvent): void {
 			activate();
+			
 		}
 		public override function activate(): void {
-			trace(sayMyName);
-			
-			activated = !activated;
-			if (activated)ArcadeOS.clickedTags.push(sayMyName);
-			if(!activated)ArcadeOS.clickedTags.splice(sayMyName);
-			ArcadeOS.toggleTags();
-			//var mainView:MainView=new MainView();
-			//ArcadeOS.changeMainView(ArcadeOS.mainView);
-			
-			//sideView.tagTriggered = true;
+			colorOn = !colorOn;
+			activated = ArcadeOS.toggleTag(sayMyName);
+				
 			
 		}
 		private function handleLoaded(e: Event): void {

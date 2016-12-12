@@ -1,0 +1,23 @@
+<media>
+	<name>Asteroids</name>
+	<primary>game</primary>
+	<desc>Blow up some asteroids before they collide with you and take on Barkley!</desc>
+	<launch>content/projects/Asteroids/Asteroids/ThreeDee2.exe</launch>
+	<thumb>content/projects/Asteroids/TitleIcon.png</thumb>
+	<images>
+		<image>content/projects/Asteroids/Screenshot01.png</image>
+		<image>content/projects/Asteroids/Screenshot02.png</image>
+	</images>
+	<tags>
+		<tag>action</tag>
+		<tag>shooter</tag>
+		<tag>3d</tag>
+		<tag>keyboard support</tag>
+		<tag>space</tag>
+		<tag>spaceship</tag>
+	</tags>
+	<auths>
+		<auth>Joe Senneker</auth>
+	</auths>
+</media>
+

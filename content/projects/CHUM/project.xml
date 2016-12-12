@@ -1,0 +1,25 @@
+<media>
+	<name>C.H.U.M</name>
+	<primary>game</primary>
+	<desc>This time science has gone too far. Take control of the Counter-Human Ultimate Megalodon and wreak havoc upon the sea. Dash, eat, and destroy your way to victory. But watch out for helicopters and boats fighting back! A game developed in 48 hours for a shark-themed game jam (competition).</desc>
+	<launch>content/projects/CHUM/CHUM/chum.bat</launch>
+	<thumb>content/projects/CHUM/TitleIcon.png</thumb>
+	<images>
+		<image>content/projects/CHUM/Screenshot01.png</image>
+		<image>content/projects/CHUM/Screenshot02.png</image>
+		<image>content/projects/CHUM/Screenshot03.png</image>
+	</images>
+	<tags>
+		<tag>action</tag>
+		<tag>2d</tag>
+		<tag>keyboard support</tag>
+		<tag>funny</tag>
+		<tag>ocean</tag>
+		<tag>shark</tag>
+	</tags>
+	<auths>
+		<auth>Nick Pattison</auth>
+		<auth>Shayna Moon</auth>
+	</auths>
+</media>
+

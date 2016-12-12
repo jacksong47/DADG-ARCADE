@@ -70,7 +70,7 @@ package org.DAGD.Arcade {
 			description.wordWrap = true;
 			description.selectable = false;
 			description.autoSize = TextFieldAutoSize.LEFT;
-			description.defaultTextFormat = new TextFormat("Arial", 14, 0x0);
+			description.defaultTextFormat = new TextFormat("Arial", 18, 0xffffff);
 			description.text = caption;
 			description.antiAliasType = AntiAliasType.NORMAL;
 			//description.height = IMG_CONTAINER_HEIGHT; 
@@ -88,7 +88,7 @@ package org.DAGD.Arcade {
 			description.wordWrap = false;
 			description.selectable = false;
 			description.autoSize = TextFieldAutoSize.LEFT;
-			description.defaultTextFormat = new TextFormat("Arial", 48, 0x0);
+			description.defaultTextFormat = new TextFormat("Arial", 48, 0xebb83e);
 			description.text = caption;
 			description.antiAliasType = AntiAliasType.NORMAL;
 			//description.height = IMG_CONTAINER_HEIGHT; 

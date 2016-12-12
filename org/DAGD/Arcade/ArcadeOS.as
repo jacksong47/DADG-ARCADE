@@ -75,7 +75,7 @@
 
 			stage.addEventListener(MouseEvent.MOUSE_WHEEL, handleScrollWheel);
 			addEventListener(Event.ENTER_FRAME, handleFrame);
-			createBG();
+
 		}
 		private function handleFrame(e: Event): void {
 
@@ -112,7 +112,7 @@
 		 * loads it into the URLLOader, when it is finished,
 		 * it launches an event and runs doneLoadingData()
 		 */
-		private function loadData(): void {
+		/*private function loadData(): void {
 			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
 			var files: Array = desktop.getDirectoryListing();
 			for (var i: uint = 0; i < 1; i++) {
@@ -121,8 +121,8 @@
 				loader.addEventListener(Event.COMPLETE, doneLoadingData);
 			}
 
-		}
-		/*private function loadData(): void {
+		}*/
+		private function loadData(): void {
 			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
 			var files: Array = desktop.getDirectoryListing();
 			for (var i: uint = 0; i < files.length; i++) {
@@ -130,15 +130,21 @@
 				trace(files[i].name); // gets the name
 				var folder: String = "./content/projects/"+files[i].name + "/project.xml";
 				trace(folder);
+				var folderName:String = "./content/projects/";
+				var projectName:String = files[i].name;
+				var fileName:String = "/project.xml";
+				var fullName: String = folderName+projectName+fileName;
+				trace("pizza"+fullName);
 				//var request: URLRequest = new URLRequest(folder);
 				var request: URLRequest = new URLRequest(DATA_PATH);
+				//var request: URLRequest = new URLRequest(fullName);
 				trace(request);
 				var loader: URLLoader = new URLLoader(request);
 				loader.addEventListener(Event.COMPLETE, doneLoadingData);
 				//loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			}
 
-		}*/
+		}
 		//private function onError(e:IOErrorEvent):void{
 			
 		//}
@@ -296,36 +302,6 @@
 
 			return models;
 		}
-		private function createBG(): void {
-			var gradientScaling: Number = 1; // use this for easy scaling of the gradient
-
-			var gradientMatrixWidth: Number = 50 * gradientScaling;
-			var gradientMatrixHeight: Number = 50 * gradientScaling;
-			var gradientMatrixRotation: Number = 0.63;
-			var gradientTx: Number = 0 * gradientScaling;
-			var gradientTy: Number = 0 * gradientScaling;
-
-			var gradientDrawWidth: Number = 50 * gradientScaling;
-			var gradientDrawHeight: Number = 50 * gradientScaling;
-			var gradientOffsetX: Number = 0; // use this to move the gradient horizontally
-			var gradientOffsetY: Number = 0; // use this to move the gradient vertically
-
-			var gradientMatrix: Matrix = new Matrix();
-			gradientMatrix.createGradientBox(gradientMatrixWidth, gradientMatrixHeight, gradientMatrixRotation, gradientTx + gradientOffsetX, gradientTy + gradientOffsetY);
-
-			var gradientType: String = GradientType.LINEAR;
-			var gradientColors: Array = [0x0, 0xffffff]
-			var gradientAlphas: Array = [1, 1]
-			var gradientRatios: Array = [0, 255]
-			var gradientSpreadMethod: String = SpreadMethod.PAD;
-			var gradientInterpolationMethod: String = InterpolationMethod.RGB;
-			var gradientFocalPoint: Number = 0;
-
-			var gradientGraphics: Graphics = this.graphics; // replace 'this' with the object you want to apply the gradient to
-
-			gradientGraphics.beginGradientFill(gradientType, gradientColors, gradientAlphas, gradientRatios, gradientMatrix, gradientSpreadMethod, gradientInterpolationMethod, gradientFocalPoint);
-			gradientGraphics.drawRect(gradientOffsetX, gradientOffsetY, gradientDrawWidth, gradientDrawHeight);
-			gradientGraphics.endFill();
-		}
+		
 	}
 }

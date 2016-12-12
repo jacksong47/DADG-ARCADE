@@ -3,6 +3,7 @@
 	public class ThumbView extends MainView {
 
 		public var buttons: Array = new Array(); // holds MediaButton objects
+		public var tags: Array = new Array();
 		//private var tagButton:TagButton= new TagButton();
 
 		public function ThumbView() {
@@ -26,6 +27,7 @@
 		 */
 		public override function dataUpdated(): void {
 			makeButtons();
+			makeTagButtons();
 			//trace("thumbView dataUPdated");
 			
 
@@ -52,8 +54,19 @@
 				buttons.push(bttn);
 				if(i==0)ArcadeOS.initButton1(bttn);
 			}
-			
+		}
+		private function makeTagButtons(): void {
 
+			removeTagButtons();
+
+			// CREATE NEW BUTTONS:
+			for (var i = 0; i < ArcadeOS.clickedTags.length; i++) {
+				var data: String = ArcadeOS.clickedTags[i];
+				var tag: TagButton = new TagButton(i, data);
+				addChild(tag);
+
+				tags.push(tag);
+			}
 		}
 		/**
 		 * removeButtons() runs through the "buttons" array
@@ -77,6 +90,14 @@
 			//trace("remove meeeee3");
 
 		}
+		private function removeTagButtons(): void {
+			// REMOVE ALL OLD BUTTONS:
+			for each(var tag: TagButton in tags) {
+				tag.dispose();
+				removeChild(tag);
+			}
+			tags = new Array();
+		}
 		/**
 		 * layout() lays out MainView as the ThumbView
 		 *
@@ -96,9 +117,13 @@
 			super.layout(w, h);
 
 			var cols: Number = getColumns();
+			var tagCols: Number = getTagColumns();
 			var spaceX: int = MediaButton.WIDTH + MediaButton.MARGIN;
 			var spaceY: int = MediaButton.HEIGHT + MediaButton.MARGIN;
+			var spaceTagX: int = TagButton.WIDTH + TagButton.MARGIN;
+			var spaceTagY: int = TagButton.HEIGHT + TagButton.MARGIN;
 			var sideMargins: int = (w - (spaceX * cols)) / 2;
+			var sideTagMargins: int = (w - (spaceTagX * cols)) / 2;
 
 			for (var i = 0; i < buttons.length; i++) {
 
@@ -107,12 +132,24 @@
 
 				buttons[i].x = gridX * spaceX + sideMargins;
 				//buttons[i].x = gridX * spaceX + MediaButton.MARGIN;
-				buttons[i].y = gridY * spaceY;
+				buttons[i].y = gridY * spaceY+150;
+			}
+			for (var t = 0; t < tags.length; t++) {
 
+				var gridTagX: int = t % tagCols;
+				var gridTagY: int = Math.floor(t / tagCols);
+
+				tags[t].x = gridTagX * spaceTagX;
+				//buttons[i].x = gridX * spaceX + MediaButton.MARGIN;
+				tags[t].y = gridTagY * spaceTagY;
+				trace("newFO"+spaceTagX);
 			}
 		}
 		private function getColumns(): int {
 			return Math.floor(w / MediaButton.WIDTH);
+		}
+		private function getTagColumns(): int {
+			return Math.floor(w / TagButton.WIDTH);
 		}
 		override public function dispose(): void {
 			super.dispose();

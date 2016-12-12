@@ -164,7 +164,6 @@
 			e.target.removeEventListener(Event.COMPLETE, handleLoaded);
 			var img: Bitmap = e.target.content;
 			content.addChild(img);
-			trace(img);
 			img.x=mySize/4;
 			img.y=10;
 		}

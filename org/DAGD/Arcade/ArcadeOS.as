@@ -95,7 +95,7 @@
 				if (selectedView) selectedView.activate();
 			}
 			if (Keyboard.onDown(Keyboard.ESC)) {
-				goBackToTile();
+				goBackToTitle();
 			}
 
 			if (mainView) mainView.update();
@@ -122,23 +122,15 @@
 			}
 
 		}*/
-		private function loadData(): void {
+		private function loadData(): void {//______________________________________________________________________ToDO:Make this cycle through new file system
 			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
 			var files: Array = desktop.getDirectoryListing();
-			for (var i: uint = 0; i < files.length; i++) {
-				trace(files[i].nativePath); // gets the path of the files
-				trace(files[i].name); // gets the name
+			for (var i: uint = 2; i < files.length; i++) {
+				//trace(files[i].nativePath); // gets the path of the files
+				//trace(files[i].name); // gets the name
 				var folder: String = "./content/projects/"+files[i].name + "/project.xml";
-				trace(folder);
-				var folderName:String = "./content/projects/";
-				var projectName:String = files[i].name;
-				var fileName:String = "/project.xml";
-				var fullName: String = folderName+projectName+fileName;
-				trace("pizza"+fullName);
 				//var request: URLRequest = new URLRequest(folder);
 				var request: URLRequest = new URLRequest(DATA_PATH);
-				//var request: URLRequest = new URLRequest(fullName);
-				trace(request);
 				var loader: URLLoader = new URLLoader(request);
 				loader.addEventListener(Event.COMPLETE, doneLoadingData);
 				//loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
@@ -239,7 +231,7 @@
 			return selectedView;
 		}
 		//--------------------------------------------------------------------------Add to Array to be recalled later
-		public static function goBackToTile(): void {
+		public static function goBackToTitle(): void {
 			if (viewStorage != null) {
 				for each(var oldView: MainView in viewStorage) {
 					changeMainView(oldView);

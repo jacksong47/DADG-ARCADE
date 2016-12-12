@@ -22,6 +22,7 @@ package org.DAGD.Arcade {
 		public static const BWIDTH: int = 30;
 		public static const BHEIGHT: int = 30;
 		private var backButton: Sprite = new Sprite();
+		private var backButtonHitBox: Sprite = new Sprite();
 
 		private var imgH: Number = 0;
 		private var imgContainer: Sprite = new Sprite();
@@ -99,17 +100,38 @@ package org.DAGD.Arcade {
 			addChild(description);
 
 		}
-		private function createBackButton():void{
-			addChildAt(backButton,1);
+		private function createBackButton(): void {
+			addChildAt(backButton, 1);
 			backButton.graphics.beginFill(0xff0000);
 			backButton.graphics.drawRect(0, 0, BWIDTH, BHEIGHT);
-			backButton.addEventListener(MouseEvent.CLICK,goBack);
+			backButton.addEventListener(MouseEvent.CLICK, goBack)
+			
+			/*
+			var description: TextField = new TextField();
+			description.multiline = false;
+			description.wordWrap = false;
+			description.selectable = false;
+			description.autoSize = TextFieldAutoSize.LEFT;
+			description.defaultTextFormat = new TextFormat("Arial", 36, 0xebb83e);
+			description.text = "x";
+			description.antiAliasType = AntiAliasType.NORMAL;
+			description.height = 1; 
+			description.width = 1;
+			description.x = backButton.x+5;
+			description.y = backButton.y-10;
+			addChild(description);
+			
+			backButtonHitBox.graphics.drawRect(0, 0, BWIDTH, BHEIGHT);
+			backButtonHitBox.addEventListener(MouseEvent.CLICK, goBack);
+			
+			//backButtonHitBox.x =backButton.x;
+			//backButtonHitBox.y =backButton.y;
+			//addChild(backButtonHitBox);*/
 		}
 		public function ProjESC():void{
-			ArcadeOS.goBackToTile();
+			ArcadeOS.goBackToTitle();
 		}
 		private function goBack(e:Event):void{
-			trace("clicked");
 			ProjESC();
 		}
 			

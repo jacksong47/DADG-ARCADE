@@ -131,8 +131,7 @@
 				var gridY: int = Math.floor(i / cols);
 
 				buttons[i].x = gridX * spaceX + sideMargins;
-				//buttons[i].x = gridX * spaceX + MediaButton.MARGIN;
-				buttons[i].y = gridY * spaceY+150;
+				buttons[i].y = gridY * spaceY + 150;
 			}
 			for (var t = 0; t < tags.length; t++) {
 
@@ -140,9 +139,7 @@
 				var gridTagY: int = Math.floor(t / tagCols);
 
 				tags[t].x = gridTagX * spaceTagX;
-				//buttons[i].x = gridX * spaceX + MediaButton.MARGIN;
 				tags[t].y = gridTagY * spaceTagY;
-				trace("newFO"+spaceTagX);
 			}
 		}
 		private function getColumns(): int {

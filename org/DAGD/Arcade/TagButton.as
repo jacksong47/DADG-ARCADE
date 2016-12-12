@@ -27,7 +27,7 @@
 		private var sayMyName: String;
 		public var activated: Boolean = false;
 		
-		public static var colorOn: Boolean = false;
+		private static var colorOn: Boolean = false;
 		private var defaultColor = new ColorTransform();
 		private var hoverColor = new ColorTransform();
 		
@@ -53,9 +53,6 @@
 			sayMyName = data;
 
 			addChild(content);
-			
-			graphics.beginFill(0x0);
-			graphics.drawRect(0, 0, WIDTH, HEIGHT);
 
 			setupLabel(tagName);
 			
@@ -70,14 +67,14 @@
 
 		private function setupLabel(caption: String): void {
 
-			txtBox.graphics.beginFill(0xFFFFFF, .9);
+			txtBox.graphics.beginFill(0xebb83e);
 			txtBox.graphics.drawRect(0, 0, WIDTH, TXT_BOX_HEIGHT);
 
 			label = new TextField();
 			label.multiline = false;
 			label.selectable = false;
 			label.autoSize = TextFieldAutoSize.LEFT;
-			label.defaultTextFormat = new TextFormat("Arial", 20, 0xFFFFFF);
+			label.defaultTextFormat = new TextFormat("Arial", 20, 0x0);
 			label.text = caption;
 			label.antiAliasType = AntiAliasType.NORMAL;
 			label.x = 5;
@@ -106,11 +103,11 @@
 			//content.addChildAt(img, 0);
 		}
 		public override function update(): void {
-			if(colorOn){
-				txtBox.transform.colorTransform = hoverColor;
+			/*if(colorOn){
+				this.txtBox.transform.colorTransform = hoverColor;
 			}else{
-				txtBox.transform.colorTransform = defaultColor;
-			}
+				this.txtBox.transform.colorTransform = defaultColor;
+			}*/
 		}
 		/**
 		 * This function disposes of all MediaButton information
@@ -123,17 +120,16 @@
 			removeEventListener(MouseEvent.CLICK, handleClick);
 		}
 		private function handleMouseOver(e: MouseEvent): void {
-			//ArcadeOS.setSelectedView(this);
-			//txtBox.transform.colorTransform = hoverColor;
 			
 		}
 		private function handleClick(e: MouseEvent): void {
 			activate();
-			
 		}
 		public override function activate(): void {
 			colorOn = !colorOn;
 			activated = ArcadeOS.toggleTag(sayMyName);
+			trace("plural+"+activated);
+			trace(sayMyName);
 				
 			
 		}

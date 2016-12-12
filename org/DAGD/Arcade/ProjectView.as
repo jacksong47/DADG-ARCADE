@@ -105,9 +105,12 @@ package org.DAGD.Arcade {
 			backButton.graphics.drawRect(0, 0, BWIDTH, BHEIGHT);
 			backButton.addEventListener(MouseEvent.CLICK,goBack);
 		}
+		public function ProjESC():void{
+			ArcadeOS.goBackToTile();
+		}
 		private function goBack(e:Event):void{
 			trace("clicked");
-			ArcadeOS.goBackToTile();
+			ProjESC();
 		}
 			
 	}

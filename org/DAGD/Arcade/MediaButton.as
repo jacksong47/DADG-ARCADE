@@ -51,7 +51,7 @@
 
 			setupLabel(data.title);
 			loadImage(data.imgURL);
-			trace(data.imgURL);
+			//trace(data.imgURL);
 
 			addEventListener(MouseEvent.MOUSE_OVER, handleMouseOver);
 			addEventListener(MouseEvent.CLICK, handleClick);

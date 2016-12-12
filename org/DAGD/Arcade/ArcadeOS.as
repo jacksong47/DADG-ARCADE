@@ -16,6 +16,7 @@
 	import flash.desktop.NativeProcessStartupInfo;
 	import flash.system.fscommand;
 	import flash.events.MouseEvent;
+	import flash.errors.IOError;
 	import flash.filesystem.File;
 
 
@@ -90,6 +91,12 @@
 			if (Keyboard.onDown(Keyboard.DOWN)) {
 				if (selectedView) selectedView.lookupDown();
 			}
+			if (Keyboard.onDown(Keyboard.ENTER)) {
+				if (selectedView) selectedView.activate();
+			}
+			if (Keyboard.onDown(Keyboard.ESC)) {
+				goBackToTile();
+			}
 
 			if (mainView) mainView.update();
 			if (sideView) sideView.update();
@@ -108,22 +115,33 @@
 		private function loadData(): void {
 			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
 			var files: Array = desktop.getDirectoryListing();
+			for (var i: uint = 0; i < 1; i++) {
+				var request: URLRequest = new URLRequest(DATA_PATH);
+				var loader: URLLoader = new URLLoader(request);
+				loader.addEventListener(Event.COMPLETE, doneLoadingData);
+			}
+
+		}
+		/*private function loadData(): void {
+			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
+			var files: Array = desktop.getDirectoryListing();
 			for (var i: uint = 0; i < files.length; i++) {
 				trace(files[i].nativePath); // gets the path of the files
 				trace(files[i].name); // gets the name
-				var folder: String = files[i].nativePath + "\\project.xml";
+				var folder: String = "./content/projects/"+files[i].name + "/project.xml";
 				trace(folder);
 				//var request: URLRequest = new URLRequest(folder);
 				var request: URLRequest = new URLRequest(DATA_PATH);
 				trace(request);
 				var loader: URLLoader = new URLLoader(request);
 				loader.addEventListener(Event.COMPLETE, doneLoadingData);
+				//loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			}
 
-
-
-
-		}
+		}*/
+		//private function onError(e:IOErrorEvent):void{
+			
+		//}
 		/**
 		 * doneLoadingData() is used to initate the use of data after
 		 * the screen is set up
@@ -152,6 +170,7 @@
 				collection.push(new MediaModel(xml.media[i]));
 			}
 			layout(true);
+			
 		}
 		/**
 		 * screenSetup() sets the stage's scaleMode, alignment,
@@ -182,7 +201,14 @@
 			mainView.x = sideViewWidth;
 
 			sideView.layout(sideViewWidth, h);
+			
+			//var initButton:MediaButton = thumbView.buttons[0];
+			//setSelectedView(initButton);
+			//trace(thumbView.buttons);
 
+		}
+		public static function initButton1(bttn:MediaButton):void{
+			setSelectedView(bttn);
 		}
 		private function handleScrollWheel(e: MouseEvent): void {
 			if (mainView) mainView.scroll(e.delta * SCROLL_MULT);
@@ -196,7 +222,6 @@
 			app.start(appInfo);
 		}
 		public static function setSelectedView(view: View): void {
-
 			if (selectedView != null) selectedView.setSelected(false);
 			selectedView = view;
 			selectedView.setSelected(true);

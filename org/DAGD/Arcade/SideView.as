@@ -25,6 +25,7 @@
 		public var tagTriggered: Boolean = false;
 		public var triggeredTags: Array = new Array();
 		private var content: Sprite = new Sprite();
+		private var mySize: Number;
 		public function SideView() {
 
 			createBG();
@@ -99,7 +100,7 @@
 			super.layout(w, h);
 			//graphics.beginFill(0xFFAAAA);
 			graphics.drawRect(0, 0, w, h);
-			
+			mySize=w;
 
 			var cols: Number = getColumns();
 			var spaceX: int = TagButton.WIDTH + TagButton.MARGIN;
@@ -113,7 +114,7 @@
 
 				tags[i].x = gridX * spaceX + sideMargins;
 				//buttons[i].x = gridX * spaceX + MediaButton.MARGIN;
-				tags[i].y = gridY * spaceY + 100;
+				tags[i].y = gridY * spaceY + 150;
 
 			}
 		}
@@ -124,7 +125,7 @@
 			var gradientScaling: Number = 1; // use this for easy scaling of the gradient
 			var gradientMatrixWidth: Number = 1000 * gradientScaling;
 			var gradientMatrixHeight: Number = 1000 * gradientScaling;
-			var gradientMatrixRotation: Number = .9;
+			var gradientMatrixRotation: Number = 1.6;
 			var gradientTx: Number = 0 * gradientScaling;
 			var gradientTy: Number = 0 * gradientScaling;
 
@@ -137,7 +138,7 @@
 			gradientMatrix.createGradientBox(gradientMatrixWidth, gradientMatrixHeight, gradientMatrixRotation, gradientTx + gradientOffsetX, gradientTy + gradientOffsetY);
 
 			var gradientType: String = GradientType.LINEAR;
-			var gradientColors: Array = [0x212121, 0x0]
+			var gradientColors: Array = [0x727272, 0x212121]
 			var gradientAlphas: Array = [1, 1]
 			var gradientRatios: Array = [0, 255]
 			var gradientSpreadMethod: String = SpreadMethod.PAD;
@@ -153,7 +154,7 @@
 
 		}
 		private function fsuLogo(): void {
-			var request: URLRequest = new URLRequest("./content/coverart/Echoes.png");
+			var request: URLRequest = new URLRequest("./content/UI/bulldog.png");
 			var loader: Loader = new Loader();
 
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoaded);
@@ -164,8 +165,8 @@
 			var img: Bitmap = e.target.content;
 			content.addChild(img);
 			trace(img);
-			img.x=1;
-			img.y=1;
+			img.x=mySize/4;
+			img.y=10;
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 	public class ThumbView extends MainView {
 
-		private var buttons: Array = new Array(); // holds MediaButton objects
+		public var buttons: Array = new Array(); // holds MediaButton objects
 		//private var tagButton:TagButton= new TagButton();
 
 		public function ThumbView() {
@@ -26,7 +26,8 @@
 		 */
 		public override function dataUpdated(): void {
 			makeButtons();
-			trace("thumbView dataUPdated");
+			//trace("thumbView dataUPdated");
+			
 
 		}
 
@@ -41,15 +42,17 @@
 		private function makeButtons(): void {
 
 			removeButtons();
-
+			
 			var models:Array = ArcadeOS.getMediaByTags();
-
+			//trace(models.length);
 			for (var i = 0; i < models.length; i++) {
 				var data: MediaModel = models[i];
 				var bttn: MediaButton = new MediaButton(i, data);
 				addChild(bttn);
 				buttons.push(bttn);
+				if(i==0)ArcadeOS.initButton1(bttn);
 			}
+			
 
 		}
 		/**

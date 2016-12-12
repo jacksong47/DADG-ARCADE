@@ -11,6 +11,8 @@
 		public static const UP:int =		38;
 		public static const RIGHT:int = 	39;
 		public static const DOWN:int =		40;
+		public static const ENTER:int =		13;
+		public static const ESC:int =		27;
 		
 		private static var keysCurr:Array = new Array();
 		private static var keysPrev:Array = new Array();

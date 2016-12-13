@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<content>
 <media>
 	<name>Asteroids</name>
 	<primary>game</primary>
@@ -20,4 +22,5 @@
 		<auth>Joe Senneker</auth>
 	</auths>
 </media>
+</content>
 

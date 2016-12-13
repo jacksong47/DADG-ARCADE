@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<content>
 <media>
 	<name>C.H.U.M</name>
 	<primary>game</primary>
@@ -22,4 +24,6 @@
 		<auth>Shayna Moon</auth>
 	</auths>
 </media>
+</content>
+
 

@@ -60,7 +60,7 @@
 		public function ArcadeOS() {
 			Keyboard.setup(stage);
 
-			
+
 
 
 			main = this;
@@ -122,23 +122,20 @@
 			}
 
 		}*/
-		private function loadData(): void {//______________________________________________________________________ToDO:Make this cycle through new file system
+		private function loadData(): void { //______________________________________________________________________ToDO:Make this cycle through new file system
 			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
 			var files: Array = desktop.getDirectoryListing();
-			for (var i: uint = 2; i < files.length; i++) {
-				//trace(files[i].nativePath); // gets the path of the files
-				//trace(files[i].name); // gets the name
-				var folder: String = "./content/projects/"+files[i].name + "/project.xml";
-				//var request: URLRequest = new URLRequest(folder);
-				var request: URLRequest = new URLRequest(DATA_PATH);
+			for (var i: uint = 0; i < files.length; i++) {
+				var folder: String = "./content/projects/" + files[i].name + "/project.xml";
+				var request: URLRequest = new URLRequest(folder);
+				trace(folder);
+				//var request: URLRequest = new URLRequest(DATA_PATH);
 				var loader: URLLoader = new URLLoader(request);
-				loader.addEventListener(Event.COMPLETE, doneLoadingData);
-				//loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			}
-
+			loader.addEventListener(Event.COMPLETE, doneLoadingData);
 		}
 		//private function onError(e:IOErrorEvent):void{
-			
+
 		//}
 		/**
 		 * doneLoadingData() is used to initate the use of data after
@@ -153,22 +150,24 @@
 		 * @param e:Event this peram launches doneLoadingData()
 		 */
 		private function doneLoadingData(e: Event): void {
+			trace("doneloadingdata");
+
 			var data: String = (e.target as URLLoader).data;
 			var xml: XML = new XML(data);
-
+			//trace(xml);
+			trace(xml.media.tags);
+			trace("xml: " + (xml.media.tags.tag.length() - 1));
 			for (var t: int = 0; t < xml.media.tags.tag.length(); t++) {
+				trace("nupe: " + t);
 				var tag = xml.media.tags.tag[t];
+				trace("work: " + tag);
 				var alreadyExists = false;
 				for each(var tag1: String in tags) {
 					if (tag1 == tag) alreadyExists = true;
 				}
 				if (alreadyExists == false) tags.push(tag);
+
 			}
-			for (var i: int = 0; i < xml.media.length(); i++) {
-				collection.push(new MediaModel(xml.media[i]));
-			}
-			layout(true);
-			
 		}
 		/**
 		 * screenSetup() sets the stage's scaleMode, alignment,
@@ -199,13 +198,13 @@
 			mainView.x = sideViewWidth;
 
 			sideView.layout(sideViewWidth, h);
-			
+
 			//var initButton:MediaButton = thumbView.buttons[0];
 			//setSelectedView(initButton);
 			//trace(thumbView.buttons);
 
 		}
-		public static function initButton1(bttn:MediaButton):void{
+		public static function initButton1(bttn: MediaButton): void {
 			setSelectedView(bttn);
 		}
 		private function handleScrollWheel(e: MouseEvent): void {
@@ -294,6 +293,6 @@
 
 			return models;
 		}
-		
+
 	}
 }

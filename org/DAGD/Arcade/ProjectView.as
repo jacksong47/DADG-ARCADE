@@ -30,7 +30,7 @@ package org.DAGD.Arcade {
 		public function ProjectView(data: MediaModel) {
 			// load image and add  
 			// create text box and add 
-			loadImage(data.imgURL);
+			loadImage(data.mainPic2);
 
 			addChild(content);
 			setupDesc(data.desc);

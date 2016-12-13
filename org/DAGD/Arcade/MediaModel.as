@@ -7,7 +7,10 @@
 		public var title:String;
 		public var desc:String;
 		public var imgURL:String;
+		public var mainPic:String;
+		public var mainPic2:String;
 		public var tagz: Array = new Array();
+		public var pics: Array = new Array();
 		
 		/**
 		* MediaModel() is the model of media data and what should be stored
@@ -29,9 +32,22 @@
 			for each(var tag:String in xml.tags.tag){
 				tagz.push(tag);
 			}
+			for each(var pic:String in xml.images.image){
+				pics.push(File.applicationDirectory.resolvePath(pic).nativePath);
+			}
 			
-			
+			mainPic2 = pics[0];
 			imgURL = File.applicationDirectory.resolvePath(xml.thumb).nativePath;
+			
+			/*for (var t: int = 0; t < xml.media.tags.tag.length; t++) {
+				trace("nupe");
+				var tag = xml.media.tags.tag[t];
+				trace("work"+tag);
+				var alreadyExists = false;
+				for each(var tag1: String in tags) {
+					if (tag1 == tag) alreadyExists = true;
+
+				}*/
 		}
 	}
 }

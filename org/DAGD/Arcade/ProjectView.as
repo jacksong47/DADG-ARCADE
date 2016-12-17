@@ -11,6 +11,7 @@ package org.DAGD.Arcade {
 	import flash.net.URLRequest;
 	import flash.display.Loader;
 	import flash.events.MouseEvent;
+	import flash.display3D.IndexBuffer3D;
 
 	public class ProjectView extends MainView {
 
@@ -26,15 +27,28 @@ package org.DAGD.Arcade {
 
 		private var imgH: Number = 0;
 		private var imgContainer: Sprite = new Sprite();
+		
+		private var projImgsMax:int;
+		private var projImgsMin:int=0;
+		private var projImgsCurrent:int=0;
+		private var projImgsArray:Array = new Array();
+		
 
 		public function ProjectView(data: MediaModel) {
 			// load image and add  
 			// create text box and add 
-			loadImage(data.mainPic2);
+			loadImage(data.mainPic);
 
 			addChild(content);
 			setupDesc(data.desc);
 			setupTitle(data.title);
+			projImgsMax = data.pics.length;
+			for each(var imgs: String in data.pics){
+				projImgsArray.push(imgs);
+			}
+		}
+		public function changeImage(imgURL):void{
+			loadImage(imgURL);
 		}
 		private function loadImage(imgURL): void {
 			var request: URLRequest = new URLRequest(imgURL);

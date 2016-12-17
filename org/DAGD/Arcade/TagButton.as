@@ -127,10 +127,7 @@
 		}
 		public override function activate(): void {
 			colorOn = !colorOn;
-			activated = ArcadeOS.toggleTag(sayMyName);
-			trace("plural+"+activated);
-			trace(sayMyName);
-				
+			activated = ArcadeOS.toggleTag(sayMyName);		
 			
 		}
 		private function handleLoaded(e: Event): void {

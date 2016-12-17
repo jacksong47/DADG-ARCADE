@@ -46,6 +46,8 @@
 		private var sideView: SideView;
 		private var mainView: MainView;
 		private var thumbView: ThumbView;
+		private var mediaModel: MediaModel;
+		private var projectView: ProjectView;
 
 		private var windowH: Number = stage.fullScreenHeight;
 		private var windowW: Number = stage.fullScreenWidth;
@@ -59,9 +61,6 @@
 		 */
 		public function ArcadeOS() {
 			Keyboard.setup(stage);
-
-
-
 
 			main = this;
 			sideView = new SideView();
@@ -78,12 +77,27 @@
 
 		}
 		private function handleFrame(e: Event): void {
-
+			
 			if (Keyboard.onDown(Keyboard.LEFT)) {
 				if (selectedView) selectedView.lookupLeft();
+				if(projectView){
+					if(mediaModel.currentPic==0){
+						mediaModel.currentPic=0;
+					}
+					mediaModel.currentPic --;
+					projectView.changeImage(mediaModel.mainPic);
+				}
 			}
 			if (Keyboard.onDown(Keyboard.RIGHT)) {
 				if (selectedView) selectedView.lookupRight();
+				if(projectView){
+					trace("on");
+					if(mediaModel.currentPic==0){
+						mediaModel.currentPic=0;
+					}
+					mediaModel.currentPic ++;
+					projectView.changeImage(mediaModel.mainPic);
+				}
 			}
 			if (Keyboard.onDown(Keyboard.UP)) {
 				if (selectedView) selectedView.lookupUp();
@@ -105,34 +119,22 @@
 			for each(var t: String in tags) {
 
 			}
-			//trace(clickedTags);
 		}
 		/**
 		 * loadData() pulls data from the .xml file and
 		 * loads it into the URLLOader, when it is finished,
 		 * it launches an event and runs doneLoadingData()
 		 */
-		/*private function loadData(): void {
-			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
-			var files: Array = desktop.getDirectoryListing();
-			for (var i: uint = 0; i < 1; i++) {
-				var request: URLRequest = new URLRequest(DATA_PATH);
-				var loader: URLLoader = new URLLoader(request);
-				loader.addEventListener(Event.COMPLETE, doneLoadingData);
-			}
-
-		}*/
 		private function loadData(): void { //______________________________________________________________________ToDO:Make this cycle through new file system
 			var desktop: File = File.applicationDirectory.resolvePath("./content/projects");
 			var files: Array = desktop.getDirectoryListing();
 			for (var i: uint = 0; i < files.length; i++) {
 				var folder: String = "./content/projects/" + files[i].name + "/project.xml";
 				var request: URLRequest = new URLRequest(folder);
-				trace(folder);
-				//var request: URLRequest = new URLRequest(DATA_PATH);
 				var loader: URLLoader = new URLLoader(request);
+				
+				loader.addEventListener(Event.COMPLETE, doneLoadingData);
 			}
-			loader.addEventListener(Event.COMPLETE, doneLoadingData);
 		}
 		//private function onError(e:IOErrorEvent):void{
 
@@ -150,17 +152,14 @@
 		 * @param e:Event this peram launches doneLoadingData()
 		 */
 		private function doneLoadingData(e: Event): void {
-			trace("doneloadingdata");
-
 			var data: String = (e.target as URLLoader).data;
 			var xml: XML = new XML(data);
-			//trace(xml);
-			trace(xml.media.tags);
-			trace("xml: " + (xml.media.tags.tag.length() - 1));
+			for (var i: int = 0; i < xml.media.length(); i++) {
+				collection.push(new MediaModel(xml.media[i]));
+			}
+			
 			for (var t: int = 0; t < xml.media.tags.tag.length(); t++) {
-				trace("nupe: " + t);
 				var tag = xml.media.tags.tag[t];
-				trace("work: " + tag);
 				var alreadyExists = false;
 				for each(var tag1: String in tags) {
 					if (tag1 == tag) alreadyExists = true;
@@ -168,6 +167,7 @@
 				if (alreadyExists == false) tags.push(tag);
 
 			}
+			layout(true);
 		}
 		/**
 		 * screenSetup() sets the stage's scaleMode, alignment,
@@ -272,7 +272,6 @@
 			return false;
 		}
 		public static function getMediaByTags(): Array {
-
 			if (clickedTags.length == 0) return collection;
 
 			var models: Array = new Array();

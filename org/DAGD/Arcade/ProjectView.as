@@ -69,6 +69,8 @@ package org.DAGD.Arcade {
 
 			imgContainer.x = LEFT_MARGIN;
 			imgContainer.y = TOP_MARGIN;
+			img.height = IMG_CONTAINER_HEIGHT;
+			img.width = IMG_CONTAINER_WIDTH;
 			img.x = LEFT_MARGIN;
 			img.y = TOP_MARGIN;
 			imgH = img.height;

@@ -60,6 +60,7 @@
 			defaultColor.color = 0xebb83e;
 			hoverColor.color = 0xeb3e3e;
 			clickedColor.color = 0xff0000;
+			
 
 			//loadImage(data.imgURL);
 
@@ -106,12 +107,16 @@
 			//content.addChildAt(img, 0);
 		}
 		public override function update(): void {
+			
+			label.defaultTextFormat = new TextFormat("Arial", 20, 0x0);
 			if (!colorOn) {
-				this.txtBox.transform.colorTransform = defaultColor;
+				//this.txtBox.transform.colorTransform = defaultColor;
+				this.txtBox.graphics.beginFill(defaultColor);
 			}
 
 			if (selected) {
-				this.txtBox.transform.colorTransform = hoverColor;
+				//this.txtBox.transform.colorTransform = hoverColor;
+				this.txtBox.graphics.beginFill(0xeb3e3e);
 			}
 		}
 		/**
@@ -126,12 +131,12 @@
 		}
 		private function handleMouseOver(e: MouseEvent): void {
 			ArcadeOS.setSelectedView(this);
-			this.txtBox.transform.colorTransform = hoverColor;
+			this.txtBox.graphics.beginFill(hoverColor);
 			colorOn = true;
 			//trace("over it");
 		}
 		private function handleMouseOut(e: MouseEvent): void {
-			this.txtBox.transform.colorTransform = defaultColor;
+			this.txtBox.graphics.beginFill(defaultColor);
 			colorOn = false;
 			//trace("off it");
 		}

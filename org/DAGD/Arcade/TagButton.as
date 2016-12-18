@@ -110,13 +110,11 @@
 			
 			label.defaultTextFormat = new TextFormat("Arial", 20, 0x0);
 			if (!colorOn) {
-				//this.txtBox.transform.colorTransform = defaultColor;
-				this.txtBox.graphics.beginFill(defaultColor);
+				this.txtBox.transform.colorTransform = defaultColor;
 			}
 
 			if (selected) {
-				//this.txtBox.transform.colorTransform = hoverColor;
-				this.txtBox.graphics.beginFill(0xeb3e3e);
+				this.txtBox.transform.colorTransform = hoverColor;
 			}
 		}
 		/**
@@ -131,12 +129,12 @@
 		}
 		private function handleMouseOver(e: MouseEvent): void {
 			ArcadeOS.setSelectedView(this);
-			this.txtBox.graphics.beginFill(hoverColor);
+			this.txtBox.transform.colorTransform=hoverColor;
 			colorOn = true;
 			//trace("over it");
 		}
 		private function handleMouseOut(e: MouseEvent): void {
-			this.txtBox.graphics.beginFill(defaultColor);
+			this.txtBox.transform.colorTransform=defaultColor;
 			colorOn = false;
 			//trace("off it");
 		}

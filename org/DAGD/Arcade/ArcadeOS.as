@@ -229,7 +229,6 @@
 		public static function getSelectedView(): View {
 			return selectedView;
 		}
-		//--------------------------------------------------------------------------Add to Array to be recalled later
 		public static function goBackToTitle(): void {
 			if (viewStorage != null) {
 				for each(var oldView: MainView in viewStorage) {

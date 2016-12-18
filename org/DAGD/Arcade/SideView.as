@@ -167,5 +167,37 @@
 			img.x=mySize/4;
 			img.y=10;
 		}
+		override public function lookupLeft(): void {
+			var index: int = tags.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
+			index--;
+			if (index >= 0) {
+				ArcadeOS.setSelectedView(tags[index]);
+			}
+		}
+		override public function lookupRight(): void {
+			var index: int = tags.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
+			index++;
+			if (index < tags.length) {
+				ArcadeOS.setSelectedView(tags[index]);
+			}
+		}
+		override public function lookupUp(): void {
+			var index: int = tags.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
+			index -= getColumns();
+			if (index >= 0) {
+				ArcadeOS.setSelectedView(tags[index]);
+			}
+		}
+		override public function lookupDown(): void {
+			var index: int = tags.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
+			index += getColumns();
+			if (index < tags.length) {
+				ArcadeOS.setSelectedView(tags[index]);
+			}
+		}
 	}
 }

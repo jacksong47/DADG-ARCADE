@@ -26,12 +26,13 @@
 		private var label: TextField;
 		private var sayMyName: String;
 		public var activated: Boolean = false;
-		
+
 		private static var colorOn: Boolean = false;
 		private var defaultColor = new ColorTransform();
 		private var hoverColor = new ColorTransform();
-		
-		private var sideView:SideView;
+		private var clickedColor = new ColorTransform();
+
+		private var sideView: SideView;
 		//private var mainView:MainView;
 		//private var sideView:SideView;
 
@@ -55,13 +56,15 @@
 			addChild(content);
 
 			setupLabel(tagName);
-			
+
 			defaultColor.color = 0xebb83e;
 			hoverColor.color = 0xeb3e3e;
+			clickedColor.color = 0xff0000;
 
 			//loadImage(data.imgURL);
 
 			addEventListener(MouseEvent.MOUSE_OVER, handleMouseOver);
+			addEventListener(MouseEvent.MOUSE_OUT, handleMouseOut);
 			addEventListener(MouseEvent.CLICK, handleClick);
 		}
 
@@ -80,8 +83,8 @@
 			label.x = 5;
 			txtBox.addChild(label);
 			content.addChild(txtBox);
-			
-			
+
+
 
 		}
 		/**
@@ -103,11 +106,13 @@
 			//content.addChildAt(img, 0);
 		}
 		public override function update(): void {
-			/*if(colorOn){
-				this.txtBox.transform.colorTransform = hoverColor;
-			}else{
+			if (!colorOn) {
 				this.txtBox.transform.colorTransform = defaultColor;
-			}*/
+			}
+
+			if (selected) {
+				this.txtBox.transform.colorTransform = hoverColor;
+			}
 		}
 		/**
 		 * This function disposes of all MediaButton information
@@ -120,31 +125,40 @@
 			removeEventListener(MouseEvent.CLICK, handleClick);
 		}
 		private function handleMouseOver(e: MouseEvent): void {
-			
+			ArcadeOS.setSelectedView(this);
+			this.txtBox.transform.colorTransform = hoverColor;
+			colorOn = true;
+			//trace("over it");
+		}
+		private function handleMouseOut(e: MouseEvent): void {
+			this.txtBox.transform.colorTransform = defaultColor;
+			colorOn = false;
+			//trace("off it");
 		}
 		private function handleClick(e: MouseEvent): void {
 			activate();
 		}
 		public override function activate(): void {
-			colorOn = !colorOn;
-			activated = ArcadeOS.toggleTag(sayMyName);		
-			
+			//colorOn = !colorOn;
+			activated = ArcadeOS.toggleTag(sayMyName);
+
 		}
 		private function handleLoaded(e: Event): void {
 
-			/*public override function lookupLeft(): void {
-				View(parent).lookupLeft();
-			}
-			public override function lookupRight(): void {
-				View(parent).lookupRight();
-			}
-			public override function lookupUp(): void {
-				View(parent).lookupUp();
-			}
-			public override function lookupDown(): void {
-				View(parent).lookupDown();
-			}*/
 		}
+		public override function lookupLeft(): void {
+			View(parent).lookupLeft();
+		}
+		public override function lookupRight(): void {
+			View(parent).lookupRight();
+		}
+		public override function lookupUp(): void {
+			View(parent).lookupUp();
+		}
+		public override function lookupDown(): void {
+			View(parent).lookupDown();
+		}
+
 
 	}
 

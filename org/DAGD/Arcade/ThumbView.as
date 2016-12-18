@@ -29,7 +29,7 @@
 			makeButtons();
 			makeTagButtons();
 			//trace("thumbView dataUPdated");
-			
+
 
 		}
 
@@ -44,15 +44,15 @@
 		private function makeButtons(): void {
 
 			removeButtons();
-			
-			var models:Array = ArcadeOS.getMediaByTags();
+
+			var models: Array = ArcadeOS.getMediaByTags();
 			//trace(models.length);
 			for (var i = 0; i < models.length; i++) {
 				var data: MediaModel = models[i];
 				var bttn: MediaButton = new MediaButton(i, data);
 				addChild(bttn);
 				buttons.push(bttn);
-				if(i==0)ArcadeOS.initButton1(bttn);
+				if (i == 0) ArcadeOS.initButton1(bttn);
 			}
 		}
 		private function makeTagButtons(): void {
@@ -80,7 +80,7 @@
 			// REMOVE ALL OLD BUTTONS:
 			//trace("remove meeeee1");
 			for each(var bttn: MediaButton in buttons) {
-				
+
 				//trace("remove meeeee2");
 
 				bttn.dispose();
@@ -156,6 +156,7 @@
 		}
 		override public function lookupLeft(): void {
 			var index: int = buttons.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
 			index--;
 			if (index >= 0) {
 				ArcadeOS.setSelectedView(buttons[index]);
@@ -163,6 +164,7 @@
 		}
 		override public function lookupRight(): void {
 			var index: int = buttons.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
 			index++;
 			if (index < buttons.length) {
 				ArcadeOS.setSelectedView(buttons[index]);
@@ -170,6 +172,7 @@
 		}
 		override public function lookupUp(): void {
 			var index: int = buttons.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
 			index -= getColumns();
 			if (index >= 0) {
 				ArcadeOS.setSelectedView(buttons[index]);
@@ -177,6 +180,7 @@
 		}
 		override public function lookupDown(): void {
 			var index: int = buttons.indexOf(ArcadeOS.getSelectedView());
+			trace(index);
 			index += getColumns();
 			if (index < buttons.length) {
 				ArcadeOS.setSelectedView(buttons[index]);
